@@ -1,0 +1,175 @@
+﻿namespace BBEnhancedSettingsGUI
+{
+    partial class Form1
+    {
+        /// <summary>
+        ///  Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        ///  Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        ///  Required method for Designer support - do not modify
+        ///  the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            settingDescriptionPanel = new Panel();
+            settingDescriptionLabel = new Label();
+            saveButton = new Button();
+            savedStatusLabel = new Label();
+            savedStatusPanel = new Panel();
+            settingTitleLabel = new Label();
+            emevdPathTextBox = new TextBox();
+            browseEmevdPathButton = new Button();
+            settingsListPanel = new FlowLayoutPanel();
+            settingDescriptionPanel.SuspendLayout();
+            savedStatusPanel.SuspendLayout();
+            SuspendLayout();
+            // 
+            // settingDescriptionPanel
+            // 
+            settingDescriptionPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            settingDescriptionPanel.AutoScroll = true;
+            settingDescriptionPanel.BackColor = Color.Transparent;
+            settingDescriptionPanel.Controls.Add(settingDescriptionLabel);
+            settingDescriptionPanel.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            settingDescriptionPanel.ForeColor = SystemColors.WindowText;
+            settingDescriptionPanel.Location = new Point(12, 38);
+            settingDescriptionPanel.Name = "settingDescriptionPanel";
+            settingDescriptionPanel.Size = new Size(324, 95);
+            settingDescriptionPanel.TabIndex = 1;
+            settingDescriptionPanel.Resize += SettingDescriptionPanel_Resize;
+            // 
+            // settingDescriptionLabel
+            // 
+            settingDescriptionLabel.AutoSize = true;
+            settingDescriptionLabel.BackColor = Color.Transparent;
+            settingDescriptionLabel.Location = new Point(0, 0);
+            settingDescriptionLabel.Name = "settingDescriptionLabel";
+            settingDescriptionLabel.Size = new Size(0, 15);
+            settingDescriptionLabel.TabIndex = 0;
+            // 
+            // saveButton
+            // 
+            saveButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            saveButton.Enabled = false;
+            saveButton.Location = new Point(342, 65);
+            saveButton.Name = "saveButton";
+            saveButton.Size = new Size(80, 42);
+            saveButton.TabIndex = 2;
+            saveButton.Text = "Save";
+            saveButton.UseVisualStyleBackColor = true;
+            saveButton.Click += SaveButton_Click;
+            // 
+            // savedStatusLabel
+            // 
+            savedStatusLabel.Dock = DockStyle.Fill;
+            savedStatusLabel.Location = new Point(0, 0);
+            savedStatusLabel.Name = "savedStatusLabel";
+            savedStatusLabel.Size = new Size(80, 23);
+            savedStatusLabel.TabIndex = 0;
+            savedStatusLabel.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // savedStatusPanel
+            // 
+            savedStatusPanel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            savedStatusPanel.Controls.Add(savedStatusLabel);
+            savedStatusPanel.Location = new Point(342, 110);
+            savedStatusPanel.Name = "savedStatusPanel";
+            savedStatusPanel.Size = new Size(80, 23);
+            savedStatusPanel.TabIndex = 3;
+            // 
+            // settingTitleLabel
+            // 
+            settingTitleLabel.AutoSize = true;
+            settingTitleLabel.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            settingTitleLabel.Location = new Point(12, 9);
+            settingTitleLabel.Name = "settingTitleLabel";
+            settingTitleLabel.Size = new Size(0, 15);
+            settingTitleLabel.TabIndex = 4;
+            // 
+            // emevdPathTextBox
+            // 
+            emevdPathTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            emevdPathTextBox.BorderStyle = BorderStyle.FixedSingle;
+            emevdPathTextBox.Location = new Point(12, 9);
+            emevdPathTextBox.Name = "emevdPathTextBox";
+            emevdPathTextBox.Size = new Size(324, 23);
+            emevdPathTextBox.TabIndex = 1;
+            // 
+            // browseEmevdPathButton
+            // 
+            browseEmevdPathButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            browseEmevdPathButton.Location = new Point(342, 9);
+            browseEmevdPathButton.Name = "browseEmevdPathButton";
+            browseEmevdPathButton.Size = new Size(80, 23);
+            browseEmevdPathButton.TabIndex = 5;
+            browseEmevdPathButton.Text = "Browse";
+            browseEmevdPathButton.UseVisualStyleBackColor = true;
+            browseEmevdPathButton.Click += BrowseEmevdPathButton_Click;
+            // 
+            // settingsListPanel
+            // 
+            settingsListPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            settingsListPanel.AutoScroll = true;
+            settingsListPanel.BackColor = SystemColors.GradientInactiveCaption;
+            settingsListPanel.FlowDirection = FlowDirection.TopDown;
+            settingsListPanel.Location = new Point(12, 139);
+            settingsListPanel.Name = "settingsListPanel";
+            settingsListPanel.Size = new Size(411, 473);
+            settingsListPanel.TabIndex = 6;
+            settingsListPanel.WrapContents = false;
+            // 
+            // Form1
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.Window;
+            ClientSize = new Size(434, 624);
+            Controls.Add(settingsListPanel);
+            Controls.Add(browseEmevdPathButton);
+            Controls.Add(emevdPathTextBox);
+            Controls.Add(settingTitleLabel);
+            Controls.Add(savedStatusPanel);
+            Controls.Add(saveButton);
+            Controls.Add(settingDescriptionPanel);
+            ForeColor = SystemColors.WindowText;
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            MinimumSize = new Size(450, 396);
+            Name = "Form1";
+            Text = "Bloodborne Enhanced - Default Settings Customizer";
+            settingDescriptionPanel.ResumeLayout(false);
+            settingDescriptionPanel.PerformLayout();
+            savedStatusPanel.ResumeLayout(false);
+            ResumeLayout(false);
+            PerformLayout();
+        }
+
+        #endregion
+        private Panel settingDescriptionPanel;
+        private Label settingDescriptionLabel;
+        private Button saveButton;
+        private Label savedStatusLabel;
+        private Panel savedStatusPanel;
+        private Label settingTitleLabel;
+        private TextBox emevdPathTextBox;
+        private Button browseEmevdPathButton;
+        private FlowLayoutPanel settingsListPanel;
+    }
+}

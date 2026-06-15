@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34714.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BBEnhancedSettingsGUI", "BBEnhancedSettingsGUI\BBEnhancedSettingsGUI.csproj", "{EDB5C2D5-15D6-4E3A-BFF1-C00FE5E69305}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EDB5C2D5-15D6-4E3A-BFF1-C00FE5E69305}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDB5C2D5-15D6-4E3A-BFF1-C00FE5E69305}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDB5C2D5-15D6-4E3A-BFF1-C00FE5E69305}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDB5C2D5-15D6-4E3A-BFF1-C00FE5E69305}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D5F4C557-68D1-45B5-A454-758B54310E94}
+	EndGlobalSection
+EndGlobal
