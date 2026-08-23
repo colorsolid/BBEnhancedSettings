@@ -38,6 +38,8 @@
             emevdPathTextBox = new TextBox();
             browseEmevdPathButton = new Button();
             settingsListPanel = new FlowLayoutPanel();
+            clearFilterButton = new Button();
+            settingsFilterInput = new TextBox();
             settingDescriptionPanel.SuspendLayout();
             savedStatusPanel.SuspendLayout();
             SuspendLayout();
@@ -132,9 +134,27 @@
             settingsListPanel.FlowDirection = FlowDirection.TopDown;
             settingsListPanel.Location = new Point(12, 139);
             settingsListPanel.Name = "settingsListPanel";
-            settingsListPanel.Size = new Size(411, 473);
+            settingsListPanel.Size = new Size(411, 444);
             settingsListPanel.TabIndex = 6;
             settingsListPanel.WrapContents = false;
+            // 
+            // clearFilterButton
+            // 
+            clearFilterButton.Location = new Point(347, 589);
+            clearFilterButton.Name = "clearFilterButton";
+            clearFilterButton.Size = new Size(75, 23);
+            clearFilterButton.TabIndex = 8;
+            clearFilterButton.Text = "Clear";
+            clearFilterButton.UseVisualStyleBackColor = true;
+            clearFilterButton.Click += clearFilterButton_Click;
+            // 
+            // settingsFilterInput
+            // 
+            settingsFilterInput.Location = new Point(12, 590);
+            settingsFilterInput.Name = "settingsFilterInput";
+            settingsFilterInput.Size = new Size(329, 23);
+            settingsFilterInput.TabIndex = 9;
+            settingsFilterInput.TextChanged += settingsFilterInput_TextChanged;
             // 
             // Form1
             // 
@@ -142,6 +162,8 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Window;
             ClientSize = new Size(434, 624);
+            Controls.Add(settingsFilterInput);
+            Controls.Add(clearFilterButton);
             Controls.Add(settingsListPanel);
             Controls.Add(browseEmevdPathButton);
             Controls.Add(emevdPathTextBox);
@@ -171,5 +193,8 @@
         private TextBox emevdPathTextBox;
         private Button browseEmevdPathButton;
         private FlowLayoutPanel settingsListPanel;
+        private TextBox textBox1;
+        private Button clearFilterButton;
+        private TextBox settingsFilterInput;
     }
 }

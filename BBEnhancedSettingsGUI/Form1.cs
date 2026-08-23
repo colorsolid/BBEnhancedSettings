@@ -1,6 +1,7 @@
 using SoulsFormats;
 using System.Diagnostics;
 using System.Reflection;
+using System.Runtime;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using static SoulsFormats.EMEVD.Instruction;
@@ -20,7 +21,7 @@ namespace BBEnhancedSettingsGUI
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if (!emevdPathTextBox.Focused)
+            if (!emevdPathTextBox.Focused && !settingsFilterInput.Focused)
             {
                 int limit = settingsListPanel.Controls.Count - 1;
                 Panel panel;
@@ -43,6 +44,16 @@ namespace BBEnhancedSettingsGUI
                         HandleSettingsButtonClick(selectedIndex);
                         return true;
                 }
+            }
+            switch (keyData)
+            {
+                case Keys.Control | Keys.F:
+                    Console.WriteLine("search");
+                    settingsFilterInput.Focus();
+                    break;
+                case Keys.Control | Keys.S:
+                    saveButton.PerformClick();
+                    break;
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }
@@ -83,7 +94,7 @@ namespace BBEnhancedSettingsGUI
 
             // read settings info from json file to Settings objects
             string settingsString = File.ReadAllText(GetRelativeFilePath(Path.Combine("_data", "settings.json")));
-            settings = [.. JsonSerializer.Deserialize<List<Setting>>(settingsString)!];
+            settings = [.. JsonSerializer.Deserialize<List<Setting>>(settingsString)!.Where(s => s.Hidden != true)];
 
             // find current settings values in common.emevd.dcx by finding any of the values of PossibleValues for each entry
             List<List<List<int>>>? currentSettings = ScanEventsFile(emevd);
@@ -101,16 +112,10 @@ namespace BBEnhancedSettingsGUI
                 // update Settings objects with current values from emevd
                 UpdateSettings(currentSettings, settings);
             }
-
-
             settingsListPanel.Controls.Clear();
             for (int settingIndex = 0; settingIndex < settings.Count; settingIndex++)
             {
                 Setting setting = settings[settingIndex];
-                if (setting.Hidden == true)
-                {
-                    continue;
-                }
                 Panel panel = BuildSettingButtonPanel(settingIndex, setting);
 
                 if (settingIndex == 0)
@@ -124,10 +129,7 @@ namespace BBEnhancedSettingsGUI
         Panel BuildSettingButtonPanel(int settingIndex, Setting setting)
         {
             Panel panel = new();
-            if (setting.Hidden == true)
-            {
-                panel.Visible = false;
-            }
+            setting.Panel = panel;
             var button = new Button();
             Label label = new();
             settingsListPanel.Controls.Add(panel);
@@ -201,12 +203,12 @@ namespace BBEnhancedSettingsGUI
         }
 
         void HandleSettingsPanelClick(object sender, EventArgs? e)
-        { 
+        {
             selectedIndex = settingsListPanel.Controls.IndexOf((Panel)sender);
             string panelName = $"SettingPanel_{selectedIndex}";
             string buttonName = $"SettingButton_{selectedIndex}";
-            Panel panel = (Panel)settingsListPanel.Controls[panelName];
-            Button button = (Button)panel.Controls[buttonName];
+            Panel panel = (Panel)settingsListPanel.Controls[panelName]!;
+            Button button = (Button)panel.Controls[buttonName]!;
             button?.Focus();
             Point scrollPosition = settingsListPanel.AutoScrollPosition;
             UpdateSelection((Panel)sender);
@@ -377,25 +379,11 @@ namespace BBEnhancedSettingsGUI
                     }
                     if (setting.ActivateOnly == true)
                     {
-                        if (setting.Value == "Enabled")
-                        {
-                            args[1] = 1;
-                        }
-                        else
-                        {
-                            args[1] = 0;
-                        }
+                        args[1] = setting.Value == "Enabled" ? 1 : 0;
                     }
                     else if (setting.PossibleValues.Count > 2 || setting.ForceRotate == true)
                     {
-                        if (setting.PossibleValues[setting.Value] == eventFlag)
-                        {
-                            args[1] = 1;
-                        }
-                        else
-                        {
-                            args[1] = 0;
-                        }
+                        args[1] = setting.PossibleValues[setting.Value] == eventFlag ? 1 : 0;
                     }
                     else
                     {
@@ -464,6 +452,30 @@ namespace BBEnhancedSettingsGUI
                 LoadSettings();
             }
         }
+
+        private void settingsFilterInput_TextChanged(object sender, EventArgs e)
+        {
+            string text = (sender as TextBox)!.Text.Trim();
+            if (string.IsNullOrEmpty(text))
+            {
+                foreach (var setting in settings)
+                {
+                    setting.Panel.Visible = true;
+                }
+            }
+            else
+            {
+                foreach (var setting in settings)
+                {
+                    setting.Panel.Visible = setting.Name.Contains(text, StringComparison.CurrentCultureIgnoreCase);
+                }
+            }
+        }
+
+        private void clearFilterButton_Click(object sender, EventArgs e)
+        {
+            settingsFilterInput.Clear();
+        }
     }
 
     class Setting
@@ -475,5 +487,6 @@ namespace BBEnhancedSettingsGUI
         public bool? ActivateOnly { get; set; }
         public bool? Hidden { get; set; }
         public bool? ForceRotate { get; set; } // act like PossibleValues has more than 2 values
+        [JsonIgnore] public Panel Panel { get; set; }
     }
 }
