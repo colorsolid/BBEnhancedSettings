@@ -18,6 +18,7 @@ namespace BBEnhancedSettingsGUI
         private readonly int settingsEventId = 10008400;
         EMEVD? emevd;
         int selectedIndex;
+        string settingsPath;
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
@@ -48,7 +49,6 @@ namespace BBEnhancedSettingsGUI
             switch (keyData)
             {
                 case Keys.Control | Keys.F:
-                    Console.WriteLine("search");
                     settingsFilterInput.Focus();
                     break;
                 case Keys.Control | Keys.S:
@@ -61,7 +61,7 @@ namespace BBEnhancedSettingsGUI
         public Form1()
         {
             InitializeComponent();
-
+            UpdateSettingsPath();
             string overridePath = GetRelativeFilePath("path.txt");
             Console.WriteLine(overridePath);
             if (File.Exists(overridePath))
@@ -88,12 +88,31 @@ namespace BBEnhancedSettingsGUI
             timer.Tick += TimerTick;
         }
 
+        void UpdateSettingsPath()
+        { 
+            string overrideName = "path_override.txt";
+            string pathOverride = "";
+            if (File.Exists(overrideName))
+            {
+                string path = File.ReadAllText(overrideName).Trim();
+                if (Directory.Exists(path)) {
+                    pathOverride = path;
+                }
+                settingsPath = Path.Combine(pathOverride, "_data", "settings.json");
+            }
+            else
+            {
+                settingsPath = GetRelativeFilePath(Path.Combine("_data", "settings.json"));
+            }
+            Console.WriteLine(settingsPath);
+        }
+
         void LoadSettings()
         {
             settingsListPanel.AutoScroll = true;
 
             // read settings info from json file to Settings objects
-            string settingsString = File.ReadAllText(GetRelativeFilePath(Path.Combine("_data", "settings.json")));
+            string settingsString = File.ReadAllText(settingsPath);
             settings = [.. JsonSerializer.Deserialize<List<Setting>>(settingsString)!.Where(s => s.Hidden != true)];
 
             // find current settings values in common.emevd.dcx by finding any of the values of PossibleValues for each entry
@@ -297,7 +316,7 @@ namespace BBEnhancedSettingsGUI
             List<EMEVD.Event> events = emevd.Events;
             foreach (var @event in events)
             {
-                Console.WriteLine(@event.ID);
+                //Console.WriteLine(@event.ID);
             }
             List<EMEVD.Event> settingsEvents = [.. events.Where(e => (int)e.ID == settingsEventId)];
             if (settingsEvents.Count == 0)
@@ -353,7 +372,7 @@ namespace BBEnhancedSettingsGUI
 
             foreach (EMEVD.Event @event in settingsEvents)
             {
-                Console.WriteLine(@event.ID);
+                //Console.WriteLine(@event.ID);
                 List<EMEVD.Instruction> instructions = @event.Instructions;
                 foreach (EMEVD.Instruction instruction in instructions)
                 {
@@ -369,7 +388,7 @@ namespace BBEnhancedSettingsGUI
                     {
                         continue;
                     }
-                    Console.WriteLine(args[0].ToString());
+                    //Console.WriteLine(args[0].ToString());
                     int eventFlag = (int)args[0];
                     Setting setting = settings.FirstOrDefault(s => s.PossibleValues.ContainsValue(eventFlag))!;
                     if (setting == null)
@@ -413,9 +432,7 @@ namespace BBEnhancedSettingsGUI
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
             };
             string settingsString = JsonSerializer.Serialize(settings, options);
-            string jsonPath = GetRelativeFilePath("_data/settings.json");
-            Console.WriteLine(jsonPath);
-            File.WriteAllText(jsonPath, settingsString);
+            File.WriteAllText(settingsPath, settingsString);
         }
 
         private void ResizeLabel()
