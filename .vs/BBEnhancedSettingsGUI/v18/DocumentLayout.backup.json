@@ -1,0 +1,108 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Projects\\bbhelper\\vsprojects\\BBEnhancedSettingsGUI\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{EDB5C2D5-15D6-4E3A-BFF1-C00FE5E69305}|BBEnhancedSettingsGUI\\BBEnhancedSettingsGUI.csproj|C:\\Projects\\bbhelper\\vsprojects\\BBEnhancedSettingsGUI\\bbenhancedsettingsgui\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{EDB5C2D5-15D6-4E3A-BFF1-C00FE5E69305}|BBEnhancedSettingsGUI\\BBEnhancedSettingsGUI.csproj|solutionrelative:bbenhancedsettingsgui\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDB5C2D5-15D6-4E3A-BFF1-C00FE5E69305}|BBEnhancedSettingsGUI\\BBEnhancedSettingsGUI.csproj|c:\\projects\\bbhelper\\vsprojects\\bbenhancedsettingsgui\\bbenhancedsettingsgui\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDB5C2D5-15D6-4E3A-BFF1-C00FE5E69305}|BBEnhancedSettingsGUI\\BBEnhancedSettingsGUI.csproj|solutionrelative:bbenhancedsettingsgui\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDB5C2D5-15D6-4E3A-BFF1-C00FE5E69305}|BBEnhancedSettingsGUI\\BBEnhancedSettingsGUI.csproj|c:\\projects\\bbhelper\\vsprojects\\bbenhancedsettingsgui\\bbenhancedsettingsgui\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EDB5C2D5-15D6-4E3A-BFF1-C00FE5E69305}|BBEnhancedSettingsGUI\\BBEnhancedSettingsGUI.csproj|solutionrelative:bbenhancedsettingsgui\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDB5C2D5-15D6-4E3A-BFF1-C00FE5E69305}|BBEnhancedSettingsGUI\\BBEnhancedSettingsGUI.csproj|c:\\projects\\bbhelper\\vsprojects\\bbenhancedsettingsgui\\bbenhancedsettingsgui\\bbenhancedsettingsgui.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{EDB5C2D5-15D6-4E3A-BFF1-C00FE5E69305}|BBEnhancedSettingsGUI\\BBEnhancedSettingsGUI.csproj|solutionrelative:bbenhancedsettingsgui\\bbenhancedsettingsgui.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EDB5C2D5-15D6-4E3A-BFF1-C00FE5E69305}|BBEnhancedSettingsGUI\\BBEnhancedSettingsGUI.csproj|c:\\projects\\bbhelper\\vsprojects\\bbenhancedsettingsgui\\bbenhancedsettingsgui\\_data\\settings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{EDB5C2D5-15D6-4E3A-BFF1-C00FE5E69305}|BBEnhancedSettingsGUI\\BBEnhancedSettingsGUI.csproj|solutionrelative:bbenhancedsettingsgui\\_data\\settings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "C:\\Projects\\bbhelper\\vsprojects\\BBEnhancedSettingsGUI\\BBEnhancedSettingsGUI\\Form1.cs",
+              "RelativeDocumentMoniker": "BBEnhancedSettingsGUI\\Form1.cs",
+              "ToolTip": "C:\\Projects\\bbhelper\\vsprojects\\BBEnhancedSettingsGUI\\BBEnhancedSettingsGUI\\Form1.cs*",
+              "RelativeToolTip": "BBEnhancedSettingsGUI\\Form1.cs*",
+              "ViewState": "AgIAAOkBAAAAAAAAAAAAAAECAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-03T01:00:05.93Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "BBEnhancedSettingsGUI",
+              "DocumentMoniker": "C:\\Projects\\bbhelper\\vsprojects\\BBEnhancedSettingsGUI\\BBEnhancedSettingsGUI\\BBEnhancedSettingsGUI.csproj",
+              "RelativeDocumentMoniker": "BBEnhancedSettingsGUI\\BBEnhancedSettingsGUI.csproj",
+              "ToolTip": "C:\\Projects\\bbhelper\\vsprojects\\BBEnhancedSettingsGUI\\BBEnhancedSettingsGUI\\BBEnhancedSettingsGUI.csproj",
+              "RelativeToolTip": "BBEnhancedSettingsGUI\\BBEnhancedSettingsGUI.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-10-22T18:41:49.167Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Form1.Designer.cs",
+              "DocumentMoniker": "C:\\Projects\\bbhelper\\vsprojects\\BBEnhancedSettingsGUI\\BBEnhancedSettingsGUI\\Form1.Designer.cs",
+              "RelativeDocumentMoniker": "BBEnhancedSettingsGUI\\Form1.Designer.cs",
+              "ToolTip": "C:\\Projects\\bbhelper\\vsprojects\\BBEnhancedSettingsGUI\\BBEnhancedSettingsGUI\\Form1.Designer.cs*",
+              "RelativeToolTip": "BBEnhancedSettingsGUI\\Form1.Designer.cs*",
+              "ViewState": "AgIAABoAAAAAAAAAAAAAADcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-22T18:19:07.914Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Form1.cs [Design]",
+              "DocumentMoniker": "C:\\Projects\\bbhelper\\vsprojects\\BBEnhancedSettingsGUI\\BBEnhancedSettingsGUI\\Form1.cs",
+              "RelativeDocumentMoniker": "BBEnhancedSettingsGUI\\Form1.cs",
+              "ToolTip": "C:\\Projects\\bbhelper\\vsprojects\\BBEnhancedSettingsGUI\\BBEnhancedSettingsGUI\\Form1.cs [Design]*",
+              "RelativeToolTip": "BBEnhancedSettingsGUI\\Form1.cs [Design]*",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-22T23:16:07.538Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "settings.json",
+              "DocumentMoniker": "C:\\Projects\\bbhelper\\vsprojects\\BBEnhancedSettingsGUI\\BBEnhancedSettingsGUI\\_data\\settings.json",
+              "RelativeDocumentMoniker": "BBEnhancedSettingsGUI\\_data\\settings.json",
+              "ToolTip": "C:\\Projects\\bbhelper\\vsprojects\\BBEnhancedSettingsGUI\\BBEnhancedSettingsGUI\\_data\\settings.json",
+              "RelativeToolTip": "BBEnhancedSettingsGUI\\_data\\settings.json",
+              "ViewState": "AgIAALoAAAAAAAAAAAAEwMwAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-04-22T16:37:35.638Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

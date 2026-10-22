@@ -1,3 +1,4 @@
+using DotNext.Collections.Generic;
 using SoulsFormats;
 using System.Diagnostics;
 using System.Reflection;
@@ -5,6 +6,7 @@ using System.Runtime;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using static SoulsFormats.EMEVD.Instruction;
+using static SoulsFormats.PARAM;
 using Button = System.Windows.Forms.Button;
 
 namespace BBEnhancedSettingsGUI
@@ -15,10 +17,29 @@ namespace BBEnhancedSettingsGUI
         List<Setting> settings = [];
         private readonly System.Windows.Forms.Timer timer = new();
         static string emevdPath = GetRelativeFilePath(@"GAME FILES\dvdroot_ps4\event\common.emevd.dcx");
+        static string paramPath = GetRelativeFilePath(@"GAME FILES\dvdroot_ps4\param\gameparam\gameparam.parambnd.dcx");
         private readonly int settingsEventId = 10008400;
         EMEVD? emevd;
         int selectedIndex;
         string settingsPath;
+
+        static Dictionary<string, string> paramsMap = new Dictionary<string, string> {
+            {"AtkParam_Npc", "AtkParam"},
+            {"AtkParam_Pc", "AtkParam"},
+            {"BehaviorParam_PC", "BehaviorParam"},
+            {"Bullet", "BulletParam"},
+            {"default_AIStandardInfoBank", "AiStandardInfo"},
+            {"default_EnemyBehaviorBank", "EnemyStandardInfo"},
+            {"Magic", "MagicParam"},
+            {"MenuColorTableParam", "MenuParamColorTable"},
+            {"MenuValueTableParam", "MenuValueTableSpecParam"},
+            {"NewMenuColorTableParam", "MenuParamColorTable"},
+            {"QwcChange", "QwcChangeParam"},
+            {"QwcJudge", "QwcJudgeParam"},
+            {"SpEffectParam", "SpEffect"},
+            {"SpEffectVfxParam", "SpEffectVfx"},
+            {"Wind", "WindParam"},
+        };
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
@@ -70,6 +91,7 @@ namespace BBEnhancedSettingsGUI
                 if (File.Exists(contents))
                 {
                     emevdPath = contents;
+                    paramPath = Path.Join(Path.GetDirectoryName(Path.GetDirectoryName(emevdPath)), "param", "gameparam", "gameparam.parambnd.dcx");
                 }
             }
             emevdPathTextBox.Text = emevdPath;
@@ -89,13 +111,14 @@ namespace BBEnhancedSettingsGUI
         }
 
         void UpdateSettingsPath()
-        { 
+        {
             string overrideName = "path_override.txt";
             string pathOverride = "";
             if (File.Exists(overrideName))
             {
                 string path = File.ReadAllText(overrideName).Trim();
-                if (Directory.Exists(path)) {
+                if (Directory.Exists(path))
+                {
                     pathOverride = path;
                 }
                 settingsPath = Path.Combine(pathOverride, "_data", "settings.json");
@@ -306,6 +329,21 @@ namespace BBEnhancedSettingsGUI
             return Path.GetFullPath(path);
         }
 
+        static PARAM LoadParam(BinderFile paramFile)
+        {
+            string paramName = Path.GetFileNameWithoutExtension(paramFile.Name);
+            string mappedName = paramName;
+            if (paramsMap.ContainsKey(paramName))
+            {
+                mappedName = paramsMap[paramName];
+            }
+            string defPath = Path.Join(GetRelativeFilePath(@$"_data\Defs"), mappedName + ".xml");
+            PARAM param = PARAM.Read(paramFile.Bytes);
+            PARAMDEF paramdef = PARAMDEF.XmlDeserialize(defPath, true);
+            param.ApplyParamdef(paramdef);
+            return param;
+        }
+
         List<List<List<int>>>? ScanEventsFile(EMEVD? emevd)
         {
             if (emevd == null)
@@ -458,6 +496,7 @@ namespace BBEnhancedSettingsGUI
             {
                 emevdPathTextBox.Text = openFileDialog.FileName;
                 emevdPath = openFileDialog.FileName;
+                paramPath = Path.Join(Path.GetDirectoryName(Path.GetDirectoryName(emevdPath)), "param", "gameparam", "gameparam.parambnd.dcx");
                 try
                 {
                     emevd = EMEVD.Read(emevdPath);
@@ -492,6 +531,200 @@ namespace BBEnhancedSettingsGUI
         private void clearFilterButton_Click(object sender, EventArgs e)
         {
             settingsFilterInput.Clear();
+        }
+
+        private void removeDrops()
+        {
+            if (!File.Exists(paramPath))
+            {
+                MessageBox.Show($"{paramPath} not found. Unable to apply changes.");
+                return;
+            }
+            BND4 bnd = BND4.Read(paramPath);
+            BinderFile itemLotsBinder = bnd.Files.Where(f => f.Name.Contains("ItemLotParam.param")).First();
+            PARAM param = LoadParam(itemLotsBinder);
+            var itemIds = new List<Int32> { 900, 1000 };
+            foreach (Row row in param.Rows)
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    if (itemIds.Contains((Int32)row.Cells[i].Value))
+                    {
+                        row.Cells[i + 16].Value = 0;
+                    }
+                }
+            }
+            itemLotsBinder.Bytes = param.Write();
+            var bytes = bnd.Write();
+            bnd.Dispose();
+            File.WriteAllBytes(paramPath, bytes);
+        }
+
+        private void restoreDrops()
+        {
+            if (!File.Exists(paramPath))
+            {
+                MessageBox.Show($"{paramPath} not found. Unable to apply changes.");
+                return;
+            }
+            string jsonPath = GetRelativeFilePath(@$"_data\vials_and_bullets_lots.json"); ;
+            string text = File.ReadAllText(jsonPath);
+            var lotsData = JsonSerializer.Deserialize<Dictionary<int, Dictionary<int, int>>>(text);
+            BND4 bnd = BND4.Read(paramPath);
+            BinderFile itemLotsBinder = bnd.Files.Where(f => f.Name.Contains("ItemLotParam.param")).First();
+            PARAM param = LoadParam(itemLotsBinder);
+            List<Row> filteredRows = param.Rows.Where(row => lotsData.ContainsKey(row.ID)).ToList();
+            foreach (Row row in filteredRows)
+            {
+                Dictionary<int, int> lotData = lotsData[row.ID];
+                foreach (int index in lotData.Keys)
+                {
+                    Console.WriteLine(lotData[index]);
+                    row.Cells[index + 16].Value = lotData[index];
+                }
+            }
+            itemLotsBinder.Bytes = param.Write();
+            var bytes = bnd.Write();
+            bnd.Dispose();
+            File.WriteAllBytes(paramPath, bytes);
+        }
+
+        void removeFromShops()
+        {
+            if (!File.Exists(paramPath))
+            {
+                MessageBox.Show($"{paramPath} not found. Unable to apply changes.");
+                return;
+            }
+            BND4 bnd = BND4.Read(paramPath);
+            BinderFile shopsBinder = bnd.Files.Where(f => f.Name.Contains("ShopLineupParam.param")).First();
+            PARAM param = LoadParam(shopsBinder);
+            var itemIds = new List<Int32> { 900, 1000 };
+            List<Row> filteredRows = param.Rows.Where(r => itemIds.Contains((Int32)r.Cells[0].Value)).ToList();
+            foreach (Row row in filteredRows)
+            {
+                row.Cells[3].Value = 10000999;
+                row.Cells[5].Value = 0;
+            }
+            shopsBinder.Bytes = param.Write();
+            var bytes = bnd.Write();
+            bnd.Dispose();
+            File.WriteAllBytes(paramPath, bytes);
+        }
+
+        void restoreToShops()
+        {
+            if (!File.Exists(paramPath))
+            {
+                MessageBox.Show($"{paramPath} not found. Unable to apply changes.");
+                return;
+            }
+            BND4 bnd = BND4.Read(paramPath);
+            BinderFile shopsBinder = bnd.Files.Where(f => f.Name.Contains("ShopLineupParam.param")).First();
+            PARAM param = LoadParam(shopsBinder);
+            var itemIds = new List<Int32> { 900, 1000 };
+            List<Row> filteredRows = param.Rows.Where(r => itemIds.Contains((Int32)r.Cells[0].Value)).ToList();
+            foreach (Row row in filteredRows)
+            {
+                row.Cells[3].Value = -1;
+                row.Cells[5].Value = -1;
+            }
+            shopsBinder.Bytes = param.Write();
+            var bytes = bnd.Write();
+            bnd.Dispose();
+            File.WriteAllBytes(paramPath, bytes);
+        }
+
+        private void disableStorage()
+        {
+            if (!File.Exists(paramPath))
+            {
+                MessageBox.Show($"{paramPath} not found. Unable to apply changes.");
+                return;
+            }
+            BND4 bnd = BND4.Read(paramPath);
+            BinderFile equipGoodsBinder = bnd.Files.Where(f => f.Name.Contains("EquipParamGoods.param")).First();
+            PARAM param = LoadParam(equipGoodsBinder);
+            Row bulletsRow = param.Rows.Where(r => r.ID == 900).First();
+            Row vialsRow = param.Rows.Where(r => r.ID == 1000).First();
+            bulletsRow.Cells[55].Value = 0;
+            vialsRow.Cells[55].Value = 0;
+            equipGoodsBinder.Bytes = param.Write();
+            var bytes = bnd.Write();
+            bnd.Dispose();
+            File.WriteAllBytes(paramPath, bytes);
+        }
+
+        private void enableStorage()
+        {
+            if (!File.Exists(paramPath))
+            {
+                MessageBox.Show($"{paramPath} not found. Unable to apply changes.");
+                return;
+            }
+            BND4 bnd = BND4.Read(paramPath);
+            BinderFile equipGoodsBinder = bnd.Files.Where(f => f.Name.Contains("EquipParamGoods.param")).First();
+            PARAM param = LoadParam(equipGoodsBinder);
+            Row bulletsRow = param.Rows.Where(r => r.ID == 900).First();
+            Row vialsRow = param.Rows.Where(r => r.ID == 1000).First();
+            bulletsRow.Cells[55].Value = 1;
+            vialsRow.Cells[55].Value = 1;
+            equipGoodsBinder.Bytes = param.Write();
+            var bytes = bnd.Write();
+            bnd.Dispose();
+            File.WriteAllBytes(paramPath, bytes);
+        }
+
+        private void removeDropsButton_Click(object sender, EventArgs e)
+        {
+            removeDrops();
+            MessageBox.Show("Blood vials and bullets can no longer be found in the world.");
+        }
+
+        private void restoreDropsButton_Click(object sender, EventArgs e)
+        {
+            restoreDrops();
+            MessageBox.Show("Blood vial and bullet drops have been restored.");
+        }
+
+        private void removeVBFromShopsButton_Click(object sender, EventArgs e)
+        {
+            removeFromShops();
+            MessageBox.Show("Shop entries for blood vials and bullets have been disabled.");
+        }
+
+        private void restoreVBToShopsButton_Click(object sender, EventArgs e)
+        {
+            restoreToShops();
+            MessageBox.Show("Shop entries for blood vials and bullets have been enabled.");
+        }
+
+        private void disableVBStorageButton_Click(object sender, EventArgs e)
+        {
+            disableStorage();
+            MessageBox.Show("Blood vial and bullet storage has been disabled.");
+        }
+
+        private void enableVBStorageButton_Click(object sender, EventArgs e)
+        {
+            enableStorage();
+            MessageBox.Show("Blood vial and bullet storage has been enabled.");
+        }
+
+        private void disableAllVB_Click(object sender, EventArgs e)
+        {
+            removeDrops();
+            removeFromShops();
+            disableStorage();
+            MessageBox.Show("Blood vial drops, shop entries, and storage ability have been disabled.");
+        }
+
+        private void enableAllVB_Click(object sender, EventArgs e)
+        {
+            restoreDrops();
+            restoreToShops();
+            enableStorage();
+            MessageBox.Show("Blood vial drops, shop entries, and storage ability have been enabled.");
         }
     }
 
