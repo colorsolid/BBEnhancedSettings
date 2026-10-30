@@ -50,6 +50,9 @@
             restoreVBToShopsButton = new ToolStripMenuItem();
             disableVBStorageButton = new ToolStripMenuItem();
             enableVBStorageButton = new ToolStripMenuItem();
+            toolStripSeparator1 = new ToolStripSeparator();
+            disableGhostHuntersButton = new ToolStripMenuItem();
+            enableGhostHuntersButtons = new ToolStripMenuItem();
             settingDescriptionPanel.SuspendLayout();
             savedStatusPanel.SuspendLayout();
             toolStrip1.SuspendLayout();
@@ -183,7 +186,7 @@
             // ExtrasMenu
             // 
             ExtrasMenu.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            ExtrasMenu.DropDownItems.AddRange(new ToolStripItem[] { disableAllVB, enableAllVB, removeDropsButton, restoreDropsButton, removeVBFromShopsButton, restoreVBToShopsButton, disableVBStorageButton, enableVBStorageButton });
+            ExtrasMenu.DropDownItems.AddRange(new ToolStripItem[] { enableAllVB, disableAllVB, restoreDropsButton, removeDropsButton, restoreVBToShopsButton, removeVBFromShopsButton, enableVBStorageButton, disableVBStorageButton, toolStripSeparator1, enableGhostHuntersButtons, disableGhostHuntersButton });
             ExtrasMenu.Image = (Image)resources.GetObject("ExtrasMenu.Image");
             ExtrasMenu.ImageTransparentColor = Color.Magenta;
             ExtrasMenu.Name = "ExtrasMenu";
@@ -193,7 +196,7 @@
             // disableAllVB
             // 
             disableAllVB.Name = "disableAllVB";
-            disableAllVB.Size = new Size(270, 22);
+            disableAllVB.Size = new Size(316, 22);
             disableAllVB.Text = "Vials and Bullets: Disable all";
             disableAllVB.ToolTipText = "Disable drops, shop entries, and storage ability for vials and bullets.";
             disableAllVB.Click += disableAllVB_Click;
@@ -201,15 +204,15 @@
             // enableAllVB
             // 
             enableAllVB.Name = "enableAllVB";
-            enableAllVB.Size = new Size(270, 22);
-            enableAllVB.Text = "Vials and Bullets: Enable all";
+            enableAllVB.Size = new Size(316, 22);
+            enableAllVB.Text = "Vials and Bullets: Enable all (Default)";
             enableAllVB.ToolTipText = "Enable drops, shop entries, and storage ability for vials and bullets.";
             enableAllVB.Click += enableAllVB_Click;
             // 
             // removeDropsButton
             // 
             removeDropsButton.Name = "removeDropsButton";
-            removeDropsButton.Size = new Size(270, 22);
+            removeDropsButton.Size = new Size(316, 22);
             removeDropsButton.Text = "Vials and Bullets: Disable drops";
             removeDropsButton.ToolTipText = "Remove all item drops for blood vials and bullets from enemies and bodies throughout the game.";
             removeDropsButton.Click += removeDropsButton_Click;
@@ -217,15 +220,15 @@
             // restoreDropsButton
             // 
             restoreDropsButton.Name = "restoreDropsButton";
-            restoreDropsButton.Size = new Size(270, 22);
-            restoreDropsButton.Text = "Vials and Bullets: Enable drops";
+            restoreDropsButton.Size = new Size(316, 22);
+            restoreDropsButton.Text = "Vials and Bullets: Enable drops (Default)";
             restoreDropsButton.ToolTipText = "Restore all item drops for blood vials and bullets to enemies and bodies throughout the game.";
             restoreDropsButton.Click += restoreDropsButton_Click;
             // 
             // removeVBFromShopsButton
             // 
             removeVBFromShopsButton.Name = "removeVBFromShopsButton";
-            removeVBFromShopsButton.Size = new Size(270, 22);
+            removeVBFromShopsButton.Size = new Size(316, 22);
             removeVBFromShopsButton.Text = "Vials and Bullets: Disable shop entries";
             removeVBFromShopsButton.ToolTipText = "Hide blood vials and bullets in shops.";
             removeVBFromShopsButton.Click += removeVBFromShopsButton_Click;
@@ -233,15 +236,15 @@
             // restoreVBToShopsButton
             // 
             restoreVBToShopsButton.Name = "restoreVBToShopsButton";
-            restoreVBToShopsButton.Size = new Size(270, 22);
-            restoreVBToShopsButton.Text = "Vials and Bullets: Enable shop entries";
+            restoreVBToShopsButton.Size = new Size(316, 22);
+            restoreVBToShopsButton.Text = "Vials and Bullets: Enable shop entries (Default)";
             restoreVBToShopsButton.ToolTipText = "Display blood vials and bullets in shops.";
             restoreVBToShopsButton.Click += restoreVBToShopsButton_Click;
             // 
             // disableVBStorageButton
             // 
             disableVBStorageButton.Name = "disableVBStorageButton";
-            disableVBStorageButton.Size = new Size(270, 22);
+            disableVBStorageButton.Size = new Size(316, 22);
             disableVBStorageButton.Text = "Vials and Bullets: Disable storage";
             disableVBStorageButton.ToolTipText = "Disable ability to place blood vials and bullets into storage.";
             disableVBStorageButton.Click += disableVBStorageButton_Click;
@@ -249,10 +252,31 @@
             // enableVBStorageButton
             // 
             enableVBStorageButton.Name = "enableVBStorageButton";
-            enableVBStorageButton.Size = new Size(270, 22);
-            enableVBStorageButton.Text = "Vials and Bullets: Enable storage";
+            enableVBStorageButton.Size = new Size(316, 22);
+            enableVBStorageButton.Text = "Vials and Bullets: Enable storage (Default)";
             enableVBStorageButton.ToolTipText = "Enable ability to place blood vials and bullets into storage.";
             enableVBStorageButton.Click += enableVBStorageButton_Click;
+            // 
+            // toolStripSeparator1
+            // 
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new Size(313, 6);
+            // 
+            // disableGhostHuntersButton
+            // 
+            disableGhostHuntersButton.Name = "disableGhostHuntersButton";
+            disableGhostHuntersButton.Size = new Size(316, 22);
+            disableGhostHuntersButton.Text = "Ghost Hunters: Disabled";
+            disableGhostHuntersButton.ToolTipText = "Disable ghost hunter's throughout the world. Part of the ghost shop feature. Disabling will prevent a crash that sometimes happens when first entering Old Yharnam.";
+            disableGhostHuntersButton.Click += disableGhostHuntersButton_Click;
+            // 
+            // enableGhostHuntersButtons
+            // 
+            enableGhostHuntersButtons.Name = "enableGhostHuntersButtons";
+            enableGhostHuntersButtons.Size = new Size(316, 22);
+            enableGhostHuntersButtons.Text = "Ghost Hunters: Enabled (Default)";
+            enableGhostHuntersButtons.ToolTipText = "Enable ghost hunter's throughout the world. Part of the ghost shop feature. When enabled, the game might sometimes crash upon entering Old Yharnam for the first time.";
+            enableGhostHuntersButtons.Click += enableGhostHuntersButtons_Click;
             // 
             // Form1
             // 
@@ -307,5 +331,8 @@
         private ToolStripMenuItem enableVBStorageButton;
         private ToolStripMenuItem disableAllVB;
         private ToolStripMenuItem enableAllVB;
+        private ToolStripSeparator toolStripSeparator1;
+        private ToolStripMenuItem enableGhostHuntersButtons;
+        private ToolStripMenuItem disableGhostHuntersButton;
     }
 }

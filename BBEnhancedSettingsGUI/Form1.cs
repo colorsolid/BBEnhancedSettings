@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Runtime;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 using static SoulsFormats.EMEVD.Instruction;
 using static SoulsFormats.PARAM;
 using Button = System.Windows.Forms.Button;
@@ -18,6 +19,7 @@ namespace BBEnhancedSettingsGUI
         private readonly System.Windows.Forms.Timer timer = new();
         static string emevdPath = GetRelativeFilePath(@"GAME FILES\dvdroot_ps4\event\common.emevd.dcx");
         static string paramPath = GetRelativeFilePath(@"GAME FILES\dvdroot_ps4\param\gameparam\gameparam.parambnd.dcx");
+        static string mapsPath = GetRelativeFilePath(@"GAME FILES\dvdroot_ps4\map\mapstudio");
         private readonly int settingsEventId = 10008400;
         EMEVD? emevd;
         int selectedIndex;
@@ -39,6 +41,24 @@ namespace BBEnhancedSettingsGUI
             {"SpEffectParam", "SpEffect"},
             {"SpEffectVfxParam", "SpEffectVfx"},
             {"Wind", "WindParam"},
+        };
+        List<string> mapList = new List<string> {
+            "m21_00_00_00",
+            "m21_01_00_00",
+            "m22_00_00_00",
+            "m23_00_00_01",
+            "m24_00_00_01",
+            "m24_01_00_01",
+            "m24_02_00_01",
+            "m25_00_00_00",
+            "m26_00_00_00",
+            "m27_00_00_01",
+            "m28_00_00_01",
+            "m32_00_00_01",
+            "m33_00_00_00",
+            "m34_00_00_00",
+            "m35_00_00_00",
+            "m36_00_00_00"
         };
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -92,6 +112,7 @@ namespace BBEnhancedSettingsGUI
                 {
                     emevdPath = contents;
                     paramPath = Path.Join(Path.GetDirectoryName(Path.GetDirectoryName(emevdPath)), "param", "gameparam", "gameparam.parambnd.dcx");
+                    mapsPath = Path.Join(Path.GetDirectoryName(Path.GetDirectoryName(emevdPath)), "map", "mapstudio");
                 }
             }
             emevdPathTextBox.Text = emevdPath;
@@ -497,6 +518,7 @@ namespace BBEnhancedSettingsGUI
                 emevdPathTextBox.Text = openFileDialog.FileName;
                 emevdPath = openFileDialog.FileName;
                 paramPath = Path.Join(Path.GetDirectoryName(Path.GetDirectoryName(emevdPath)), "param", "gameparam", "gameparam.parambnd.dcx");
+                mapsPath = Path.Join(Path.GetDirectoryName(Path.GetDirectoryName(emevdPath)), "map", "mapstudio");
                 try
                 {
                     emevd = EMEVD.Read(emevdPath);
@@ -579,7 +601,6 @@ namespace BBEnhancedSettingsGUI
                 Dictionary<int, int> lotData = lotsData[row.ID];
                 foreach (int index in lotData.Keys)
                 {
-                    Console.WriteLine(lotData[index]);
                     row.Cells[index + 16].Value = lotData[index];
                 }
             }
@@ -725,6 +746,87 @@ namespace BBEnhancedSettingsGUI
             restoreToShops();
             enableStorage();
             MessageBox.Show("Blood vial drops, shop entries, and storage ability have been enabled.");
+        }
+
+        private void enableGhostHuntersButtons_Click(object sender, EventArgs e)
+        {
+            string ghostPattern = @"【BBE】Ghost_\d{4}";
+            if (!Directory.Exists(mapsPath))
+            {
+                MessageBox.Show($"{mapsPath} not found. Unable to apply changes.");
+                return;
+            }
+            foreach (string map in mapList)
+            {
+                string mapPath = Path.Join(mapsPath, $"{map}.msb.dcx");
+                var msb = MSBB.Read(mapPath);
+                var dummyGhosts = msb.Parts.DummyEnemies.Where(e => Regex.IsMatch(e.Name, ghostPattern)).ToList();
+                foreach (MSBB.Part.DummyEnemy dummy in dummyGhosts)
+                {
+                    var ghost = ConvertPart<MSBB.Part.Enemy>(dummy);
+                    msb.Parts.DummyEnemies.Remove(dummy);
+                    msb.Parts.Enemies.Add(ghost);
+                }
+                msb.Write(mapPath);
+            }
+            MessageBox.Show("Ghost hunters enabled.");
+        }
+
+        private void disableGhostHuntersButton_Click(object sender, EventArgs e)
+        {
+            string ghostPattern = @"【BBE】Ghost_\d{4}";
+            if (!Directory.Exists(mapsPath))
+            {
+                MessageBox.Show($"{mapsPath} not found. Unable to apply changes.");
+                return;
+            }
+            foreach (string map in mapList)
+            {
+                string mapPath = Path.Join(mapsPath, $"{map}.msb.dcx");
+                var msb = MSBB.Read(mapPath);
+                var ghosts = msb.Parts.Enemies.Where(e => Regex.IsMatch(e.Name, ghostPattern)).ToList();
+                foreach (MSBB.Part.Enemy ghost in ghosts)
+                {
+                    //Console.WriteLine(ghost);
+                    var dummy = ConvertPart<MSBB.Part.DummyEnemy>(ghost);
+                    msb.Parts.Enemies.Remove(ghost);
+                    msb.Parts.DummyEnemies.Add(dummy);
+                }
+                msb.Write(mapPath);
+            }
+            MessageBox.Show("Ghost hunters disabled.");
+        }
+
+        public static TTarget ConvertPart<TTarget>(object source)
+        where TTarget : new()
+        {
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
+
+            var target = new TTarget();
+
+            var sourceProperties = source.GetType().GetProperties(
+                BindingFlags.Public | BindingFlags.Instance);
+
+            var targetProperties = typeof(TTarget).GetProperties(
+                BindingFlags.Public | BindingFlags.Instance);
+
+            foreach (var targetProperty in targetProperties)
+            {
+                var sourceProperty = sourceProperties.FirstOrDefault(p =>
+                    p.Name == targetProperty.Name &&
+                    p.PropertyType == targetProperty.PropertyType &&
+                    p.CanRead);
+
+                if (sourceProperty != null && targetProperty.CanWrite)
+                {
+                    targetProperty.SetValue(
+                        target,
+                        sourceProperty.GetValue(source));
+                }
+            }
+
+            return target;
         }
     }
 

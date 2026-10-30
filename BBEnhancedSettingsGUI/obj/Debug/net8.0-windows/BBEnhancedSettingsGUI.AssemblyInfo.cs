@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BBEnhancedSettingsGUI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+65ae11afff8c229223c570522228f928c8e65081")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d68dc5493b7dbe65b8fad87672231d18dbed4cb0")]
 [assembly: System.Reflection.AssemblyProductAttribute("BBEnhancedSettingsGUI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BBEnhancedSettingsGUI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -65,3 +65,4 @@ C:\projects\bbhelper\vsprojects\BBEnhancedSettingsGUI\BBEnhancedSettingsGUI\bin\
 C:\Users\color\source\repos\BBEnhancedSettingsGUI\BBEnhancedSettingsGUI\bin\Debug\net8.0-windows\DotNext.Unsafe.dll
 C:\Projects\bbhelper\vsprojects\BBEnhancedSettingsGUI\BBEnhancedSettingsGUI\obj\Debug\net8.0-windows\BBEnhancedSettingsGUI.sourcelink.json
 C:\Projects\bbhelper\vsprojects\BBEnhancedSettingsGUI\BBEnhancedSettingsGUI\obj\Debug\net8.0-windows\BBEnhancedSettingsGUI.Properties.Resources.resources
+C:\Projects\bbhelper\vsprojects\BBEnhancedSettingsGUI\BBEnhancedSettingsGUI\bin\Debug\net8.0-windows\BBEnhancedSettingsGUI.runtimeconfig.dev.json

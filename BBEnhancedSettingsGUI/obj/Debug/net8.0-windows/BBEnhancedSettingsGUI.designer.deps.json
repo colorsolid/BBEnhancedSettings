@@ -13,7 +13,8 @@
         "runtime": {
           "lib/net6.0/DotNext.dll": {
             "assemblyVersion": "4.14.0.0",
-            "fileVersion": "4.14.0.0"
+            "fileVersion": "4.14.0.0",
+            "localPath": "DotNext.dll"
           }
         }
       },
@@ -24,7 +25,8 @@
         "runtime": {
           "lib/net6.0/DotNext.Unsafe.dll": {
             "assemblyVersion": "4.14.0.0",
-            "fileVersion": "4.14.0.0"
+            "fileVersion": "4.14.0.0",
+            "localPath": "DotNext.Unsafe.dll"
           }
         }
       },
@@ -32,7 +34,8 @@
         "runtime": {
           "lib/net5.0/Microsoft.Toolkit.HighPerformance.dll": {
             "assemblyVersion": "7.1.0.0",
-            "fileVersion": "7.1.0.1"
+            "fileVersion": "7.1.0.1",
+            "localPath": "Microsoft.Toolkit.HighPerformance.dll"
           }
         }
       },
@@ -40,7 +43,8 @@
         "runtime": {
           "lib/net6.0/System.Runtime.CompilerServices.Unsafe.dll": {
             "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.0.21.52210"
+            "fileVersion": "6.0.21.52210",
+            "localPath": "System.Runtime.CompilerServices.Unsafe.dll"
           }
         }
       }
